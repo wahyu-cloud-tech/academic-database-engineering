@@ -1,0 +1,5 @@
+ACADEMIA - DATABASE ENGINEERING WITH LARAVEL 12
+
+Paket source code untuk praktikum. Baca README.md terlebih dahulu.
+Kompatibilitas: Laravel 12, PHP >= 8.2, MySQL/MariaDB.
+Commit wajib tugas: ADD DATABASE ENGINEERING dengan laravel
