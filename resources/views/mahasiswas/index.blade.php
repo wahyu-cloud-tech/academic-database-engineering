@@ -1,2 +1,125 @@
-@extends('layouts.app') @section('title','Mahasiswa') @section('heading','Data Mahasiswa')
-@section('content')<div class="page-intro"><div><div class="eyebrow">MASTER DATA / STUDENT DIRECTORY</div><h1>Mahasiswa</h1><p>Kelola identitas mahasiswa dan keterkaitannya dengan program studi.</p></div><a class="button button-primary" href="{{ route('mahasiswas.create') }}">＋ Tambah Mahasiswa</a></div><div class="panel"><form class="toolbar" method="GET"><div class="search"><span>⌕</span><input name="search" value="{{ request('search') }}" placeholder="Cari nama atau NIM..."></div><button class="button button-outline">Cari data</button></form><div class="table-wrap"><table><thead><tr><th>MAHASISWA</th><th>NIM</th><th>PROGRAM STUDI</th><th>ANGKATAN</th><th>STATUS</th><th>AKSI</th></tr></thead><tbody>@forelse($rows as $row)<tr><td><b>{{ $row->nama }}</b><small>{{ $row->email }}</small></td><td>{{ $row->nim }}</td><td>{{ $row->programStudi->nama }}</td><td>{{ $row->angkatan }}</td><td><span class="pill {{ $row->aktif?'approved':'draft' }}">{{ $row->aktif?'Aktif':'Nonaktif' }}</span></td><td class="actions"><a href="{{ route('mahasiswas.edit',$row) }}">Edit</a><form method="POST" action="{{ route('mahasiswas.destroy',$row) }}" onsubmit="return confirm('Hapus data mahasiswa ini?')">@csrf @method('DELETE')<button>Hapus</button></form></td></tr>@empty<tr><td colspan="6" class="empty">Data mahasiswa belum tersedia.</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $rows->links() }}</div></div>@endsection
+
+@extends('layouts.app')
+
+@section('title', 'Mahasiswa')
+@section('heading', 'Data Mahasiswa')
+
+@section('content')
+
+    <div class="page-intro">
+        <div>
+            <div class="eyebrow">
+                MASTER DATA / STUDENT DIRECTORY
+            </div>
+
+            <h1>Mahasiswa</h1>
+
+            <p>
+                Kelola identitas mahasiswa dan keterkaitannya
+                dengan program studi.
+            </p>
+        </div>
+
+        <a class="button button-primary" href="{{ route('mahasiswas.create') }}">
+            ＋ Tambah Mahasiswa
+        </a>
+    </div>
+
+    <div class="panel">
+
+        <form class="toolbar" method="GET">
+            <div class="search">
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Cari nama atau NIM..."
+                >
+            </div>
+
+            <button type="submit" class="button button-outline">
+                Cari Data
+            </button>
+        </form>
+        
+        <div class="table-wrap">
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>MAHASISWA</th>
+                        <th>NIM</th>
+                        <th>PROGRAM STUDI</th>
+                        <th>ANGKATAN</th>
+                        <th>STATUS</th>
+                        <th>AKSI</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse ($rows as $row)
+
+                        <tr>
+                            <td>
+                                <b>{{ $row->nama }}</b>
+                                <small>{{ $row->email }}</small>
+                            </td>
+
+                            <td>
+                                {{ $row->nim }}
+                            </td>
+
+                            <td>
+                                {{ $row->programStudi->nama }}
+                            </td>
+
+                            <td>
+                                {{ $row->angkatan }}
+                            </td>
+
+                            <td>
+                                <span class="pill {{ $row->aktif ? 'approved' : 'draft' }}">
+                                    {{ $row->aktif ? 'Aktif' : 'Nonaktif' }}
+                                </span>
+                            </td>
+
+                            <td class="actions">
+
+                                <a href="{{ route('mahasiswas.edit', $row) }}">
+                                    Edit
+                                </a>
+
+                                <form
+                                    method="POST"
+                                    action="{{ route('mahasiswas.destroy', $row) }}"
+                                    onsubmit="return confirm('Hapus data mahasiswa ini?')"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit">
+                                        Hapus
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="6" class="empty">
+                                Data mahasiswa belum tersedia.
+                            </td>
+                        </tr>
+
+                    @endforelse
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+@endsection
